@@ -1,0 +1,534 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring 基础学习(二) | 墨坊のBlog</title><meta name="description" content="使用 Spring 开发 Web 应用详解"><meta name="keywords" content="Spring,Spring MVC"><meta name="author" content="mofang-sudo,outcome1998@gmail.com"><meta name="copyright" content="mofang-sudo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/09/24/Spring%20%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0(%E4%BA%8C)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Spring 基础学习(二)"><meta property="og:url" content="http://example.com/2020/09/24/Spring%20%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0(%E4%BA%8C)/"><meta property="og:site_name" content="墨坊のBlog"><meta property="og:description" content="使用 Spring 开发 Web 应用详解"><meta property="og:image" content="http://example.com/images/post/preview09.jpg"><meta property="article:published_time" content="2020-09-24T01:05:55.000Z"><meta property="article:modified_time" content="2020-09-26T07:37:05.949Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime: '天',
+  date_suffix: {"one_hour":"刚刚","hours":"小时前","day":"天前"},
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+    },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-09-26 15:37:05'
+}</script><noscript><style type="text/css">
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/self/Kimbiedark.css"><meta name="generator" content="Hexo 5.1.1"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">23</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">16</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">12</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%95%E7%8E%B0%E4%B8%BB%E9%A1%B5%E4%BF%A1%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">展现主页信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A2%86%E5%9F%9F%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">创建领域类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%8E%A7%E5%88%B6%E5%99%A8%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">创建控制器类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%84%E7%90%86-GET-%E8%AF%B7%E6%B1%82"><span class="toc-number">1.2.1.</span> <span class="toc-text">处理 GET 请求</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E8%A7%86%E5%9B%BE"><span class="toc-number">1.3.</span> <span class="toc-text">设计视图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">模板的工作原理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E8%A1%A8%E5%8D%95%E6%8F%90%E4%BA%A4"><span class="toc-number">2.</span> <span class="toc-text">处理表单提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%A1%E9%AA%8C%E8%A1%A8%E5%8D%95%E8%BE%93%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">校验表单输入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99"><span class="toc-number">3.1.</span> <span class="toc-text">声明校验规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E8%A1%A8%E5%8D%95%E7%BB%91%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%E6%A0%A1%E9%AA%8C"><span class="toc-number">3.2.</span> <span class="toc-text">在表单绑定时执行校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%95%E7%A4%BA%E6%A0%A1%E9%AA%8C%E9%94%99%E8%AF%AF"><span class="toc-number">3.3.</span> <span class="toc-text">展示校验错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">使用视图控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E8%A7%86%E5%9B%BE%E6%A8%A1%E6%9D%BF%E5%BA%93"><span class="toc-number">5.</span> <span class="toc-text">选择视图模板库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%BC%93%E5%AD%98"><span class="toc-number">5.1.</span> <span class="toc-text">模板缓存</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/images/post/preview09.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">墨坊のBlog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Spring 基础学习(二)</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-24T01:05:55.000Z" title="发表于 2020-09-24 09:05:55">2020-09-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-26T07:37:05.949Z" title="更新于 2020-09-26 15:37:05">2020-09-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/Spring%E6%A1%86%E6%9E%B6/">Spring框架</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="展现主页信息"><a href="#展现主页信息" class="headerlink" title="展现主页信息"></a>展现主页信息</h2><p>&nbsp;&nbsp;当我们需要在主页展示的数据可能随时发生变化时，就不能将这些数据 <strong>硬编码</strong>到 <strong>HTML</strong> 页面中。应该从数据库中获取可用的数据并将其传递给页面，进而展现给客户。</p>
+<div class="note info"><p>在 <strong>Spring Web</strong> 应用中，获取和处理数据是<strong>控制器</strong>的任务，而将数据渲染到 HTML 中并在浏览器中展示则是<strong>视图</strong>的任务 </p>
+</div>
+
+<blockquote>
+<p>为了支撑 Taco 的创建页面，需要构建一些组件</p>
+</blockquote>
+<ul>
+<li>用来定义taco配料属性的<strong>领域类</strong></li>
+<li>用来获取配料信息并将其传递至视图的 <strong>Spring MVC</strong> 控制器类</li>
+<li>用来在用户的浏览器中渲染配料列表的<strong>视图模板</strong></li>
+</ul>
+<p><img src="/images/post/Spring_learn_02/drawing.png"></p>
+<h3 id="创建领域类"><a href="#创建领域类" class="headerlink" title="创建领域类"></a>创建领域类</h3><p>&nbsp;&nbsp;应用的领域指的是它所要解决的主题范围：也就是会影响到对应用理解的概念和理念。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-keyword">import</span> lombok.RequiredArgsConstructor;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ingredient</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String id;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span>  String name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Type type;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Type</span></span>&#123;<br>        WRAP,PROTEIN,VEGGIES,CHESSE,SAUCE<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;以上就是一个非常普通的 Java 领域类，定义了描述配料所需的3个属性。可以发现，该领域类并没有 setter 、getter、equals、hashCode、toString等方法。</p>
+<blockquote>
+<p>该领域类中使用了 <strong><em>Lombok</em></strong> 的库（它能在运行时动态的生成以上方法）</p>
+</blockquote>
+<div class="note info"><p><strong>@Data</strong> 注解就是由 Lombok 提供的，它会告诉 Lombok 生成所缺失的方法，同时还会生成所有以 <strong>final</strong> 属性作为参数的构造器。</p>
+</div>
+
+<p><strong>Lombok</strong> 插件可以在 <strong>getbrains</strong> 的官方插件库下载    <a class="btn-beautify button--animated orange larger" target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/6317-lombok/versions" 
+  title="Lombok"><i class="far fa-hand-point-right fa-fw"></i><span>Lombok</span></a></p>
+<h3 id="创建控制器类"><a href="#创建控制器类" class="headerlink" title="创建控制器类"></a>创建控制器类</h3><p>&nbsp;&nbsp;在 <strong>Spring MVC</strong> 框架中，控制器是重要的参与者。</p>
+<p>&nbsp;&nbsp;控制器主要负责处理 <strong>HHTP</strong> 请求，要么将请求传递给视图以便于渲染 <strong>HTML</strong> ，要么直接将数据写入响应体（<strong>RESTful</strong>）。</p>
+<blockquote>
+<p>对于 Taco Cloud 应用来说，需要一个简单的控制器，来处理相应任务</p>
+</blockquote>
+<ul>
+<li>处理路径为 <strong>“/design”</strong> 的 <strong>HTTP GET</strong> 请求</li>
+<li>构建配料的列表</li>
+<li>处理请求，并将配料数据传递给要渲染为 <strong>HTML</strong> 的视图模板，发送给发起请求的 Web 浏览器</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos.web;<br><br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Controller;<br><span class="hljs-keyword">import</span> org.springframework.ui.Model;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;<br><span class="hljs-keyword">import</span> tacos.Ingredient;<br><span class="hljs-keyword">import</span> tacos.Ingredient.Type;<br><br><span class="hljs-keyword">import</span> java.util.Arrays;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.stream.Collectors;<br><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Controller</span><br><span class="hljs-meta">@RequestMapping(&quot;/design&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DesignTacoController</span> </span>&#123;<br><br>    <span class="hljs-meta">@GetMapping</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">showDesignForm</span><span class="hljs-params">(Model model)</span> </span>&#123;<br>        List&lt;Ingredient&gt; ingredients = Arrays.asList(<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;FLTO&quot;</span>, <span class="hljs-string">&quot;Flour Tortilla&quot;</span>, Ingredient.Type.WRAP),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;COTO&quot;</span>, <span class="hljs-string">&quot;Corn Tortilla&quot;</span>, Ingredient.Type.WRAP),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;GRBF&quot;</span>, <span class="hljs-string">&quot;Ground Beef&quot;</span>, Ingredient.Type.PROTEIN),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;CARN&quot;</span>, <span class="hljs-string">&quot;Carnitas&quot;</span>, Ingredient.Type.PROTEIN),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;TMTO&quot;</span>, <span class="hljs-string">&quot;Diced Tomatoes&quot;</span>, Ingredient.Type.VEGGIES),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;LETC&quot;</span>, <span class="hljs-string">&quot;Lettuce&quot;</span>, Ingredient.Type.VEGGIES),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;CHED&quot;</span>, <span class="hljs-string">&quot;Cheddar&quot;</span>, Ingredient.Type.CHESSE),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;JACK&quot;</span>, <span class="hljs-string">&quot;Monterrey&quot;</span>, Ingredient.Type.CHESSE),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;SLSA&quot;</span>, <span class="hljs-string">&quot;Salsa&quot;</span>, Ingredient.Type.SAUCE),<br>                <span class="hljs-keyword">new</span> Ingredient(<span class="hljs-string">&quot;SRCR&quot;</span>, <span class="hljs-string">&quot;Sour Cream&quot;</span>, Ingredient.Type.SAUCE),<br>                );<br><br>        Type[] types = Ingredient.Type.values();<br>        <span class="hljs-keyword">for</span>(Type type : types)&#123;<br>            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients,type));<br>        &#125;<br><br>        model.addAttribute(<span class="hljs-string">&quot;design&quot;</span>, <span class="hljs-keyword">new</span> Taco());<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;design&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> List&lt;Ingredient&gt; <span class="hljs-title">filterByType</span><span class="hljs-params">(List&lt;Ingredient&gt; ingredients, Type type)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> ingredients<br>                .stream()<br>                .filter(x -&gt; x.getType().equals(type))<br>                .collect(Collectors.toList());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;对于 <strong>DesignTacoController</strong> ，先来关注类级别所应用的注解。</p>
+<ul>
+<li><p><strong>@Slf4j：</strong>这是 Lombok 所提供的注解，在运行时，它会在这个类中自动生成一个 <strong>Slf4j（Simple Logging Facada For Java） Logger</strong>。这个注解和在类中通过代码显示声名的效果一样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DesignTacoController.class);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>@Controller：</strong>这个注解会将这个类识别为控制器，并且将其作为组件扫描的候选者，所以 Spring 会发现它并自动创建一个 <strong>DesignTacoController</strong> 的实例，并将该实例作为 Spring 应用上下文中的 Bean。</p>
+</li>
+<li><p><strong>@RequestMapping：</strong>当这个注解运用到类级别的时候，它能够指定该控制器所处理的请求类型。上例中，规定了当前控制器将会处理路径以 <strong>“/design”</strong> 开头的请求。</p>
+</li>
+</ul>
+<h4 id="处理-GET-请求"><a href="#处理-GET-请求" class="headerlink" title="处理 GET 请求"></a>处理 GET 请求</h4><p>&nbsp;&nbsp;修饰 <strong>showDesignForm() 方法</strong>的 <strong>@GetMapping</strong> 注解对类级别的 <strong>@RequestMapping</strong> 进行了细化。 <strong>@GetMapping</strong> 结合类级别的 <strong>@RequestMapping</strong> ，指明当接受到对 <strong>“/design”</strong> 的 <strong>HTTP GET</strong>请求时，将会调用**showDesignForm() **来处理请求。</p>
+<div class="note info"><p><strong>@GetMapping</strong> 注解是在 Spring 4.3 引入的。在 Spring 4.3 之前需要用到方法级别的 <strong>@RequestMapping</strong> 注解做为替代。</p>
+</div>
+
+<blockquote>
+<p>@RequestMapping(method = RequestMethod.GET)</p>
+</blockquote>
+<blockquote>
+<p>介绍下 Spring MVC 中所有可用的请求映射注解</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">注解</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">@RequestMapping</td>
+<td align="center">通用的请求处理</td>
+</tr>
+<tr>
+<td align="center">@GetMapping</td>
+<td align="center">处理 HTTP GET 请求</td>
+</tr>
+<tr>
+<td align="center">@PostMapping</td>
+<td align="center">处理 HTTP POST 请求</td>
+</tr>
+<tr>
+<td align="center">@PutMapping</td>
+<td align="center">处理 HTTP PUT 请求</td>
+</tr>
+<tr>
+<td align="center">@DeleteMapping</td>
+<td align="center">处理 HTTP DELETE 请求</td>
+</tr>
+<tr>
+<td align="center">@PatchMapping</td>
+<td align="center">处理 HTTP PATCH 请求</td>
+</tr>
+</tbody></table>
+<div class="note success"><p>在 <strong>showDesignForm()</strong> 方法中构建了一个 <strong>Ingredient</strong> 对象的列表，当然这个列表是<strong>硬编码</strong>的。</p>
+<p>接下来，通过配料的类型过滤列表。配料类型的列表会作为属性添加到 <strong>Model</strong> 对象上，这个对象是以参数的形式传递给 <strong>showDesignForm()</strong> 方法的。</p>
+<p><strong>Model</strong> 对象负责在控制器和展示数据的视图之间传递数据。实际上，放到 <strong>Model</strong> 属性中的数据将会复制到 <strong>Servlet Response</strong> 的属性中，这样视图就可以找到这些数据了。</p>
+<p>方法最后返回 <strong>“design“</strong>，就是视图的逻辑名称，会用来将模型渲染到视图上。</p>
+</div>                                                                          
+
+<h3 id="设计视图"><a href="#设计视图" class="headerlink" title="设计视图"></a>设计视图</h3><p>&nbsp;&nbsp;运行应用并在浏览器上访问 <strong>”/design“</strong> 路径，控制器中的方法就会被调用，它会从 <strong>repository</strong> 中获取数据并放到模型中，然后将请求传递给视图。如果没有定义视图，请求将会报 <strong>HTTP 404(Not Found)</strong> 的错误。</p>
+<div class="note info"><p>Spring 提供了多种定义视图的方式。包括 <strong>JavaServer  Page(JSP)、Thymeleaf、freeMarker、Mustache 和基于 Groovy</strong> 的模板。</p>
+</div>
+
+<h4 id="模板的工作原理"><a href="#模板的工作原理" class="headerlink" title="模板的工作原理"></a>模板的工作原理</h4><p>&nbsp;&nbsp;类似 Thymeleaf 的视图库在设计时是<strong>与特定的 Web 框架解耦</strong>的。因此，它们无法感知 Spring 的模型抽象，所以无法与控制器放到 Model 中的数据协同工作。但是，它们可以<strong>与 Servlet 的 Request 属性协作</strong>。在 Spring 将请求转移到视图之前，它会<strong>把模型数据复制到 request 属性</strong>中，Thymeleaf 和 其它的视图模板就能访问到这些数据了。</p>
+<blockquote>
+<p>设计 taco 的完整页面</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/1999/xhtml&quot;</span></span><br><span class="hljs-tag">      <span class="hljs-attr">xmlns:th</span>=<span class="hljs-string">&quot;http://www.Thymeleaf.org&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Taco Cloud<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">th:href</span>=<span class="hljs-string">&quot;@&#123;/styles.css&#125;&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Design your taco!!!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">th:src</span>=<span class="hljs-string">&quot;@&#123;/images/preview07.jpg&#125;&quot;</span>/&gt;</span><br><br>        <span class="hljs-comment">&lt;!--th:object 用来接受后台传过来的对象--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span> <span class="hljs-attr">th:object</span>=<span class="hljs-string">&quot;$&#123;design&#125;&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;grid&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ingredient-group&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;wraps&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Designate your wrap:<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">th:each</span>=<span class="hljs-string">&quot;ingredient : $&#123;wrap&#125;&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ingredients&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">th:value</span>=<span class="hljs-string">&quot;$&#123;ingredient.id&#125;&quot;</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">th:text</span>=<span class="hljs-string">&quot;$&#123;ingredient.name&#125;&quot;</span>&gt;</span>INGREDIENT<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ingredient-group&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;proteins&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Pick your protein:<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">th:each</span>=<span class="hljs-string">&quot;ingredient : $&#123;protein&#125;&quot;</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ingredients&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">th:value</span>=<span class="hljs-string">&quot;$&#123;ingredient.id&#125;&quot;</span>/&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">th:text</span>=<span class="hljs-string">&quot;$&#123;ingredient.name&#125;&quot;</span>&gt;</span>INGREDIENT<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ingredient-group&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;cheese&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Pick your cheese:<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">th:each</span>=<span class="hljs-string">&quot;ingredient : $&#123;cheese&#125;&quot;</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ingredients&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">th:value</span>=<span class="hljs-string">&quot;$&#123;ingredient.id&#125;&quot;</span>/&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">th:text</span>=<span class="hljs-string">&quot;$&#123;ingredient.name&#125;&quot;</span>&gt;</span>INGREDIENT<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ingredient-group&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;veggies&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Pick your veggies:<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">th:each</span>=<span class="hljs-string">&quot;ingredient : $&#123;veggies&#125;&quot;</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ingredients&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">th:value</span>=<span class="hljs-string">&quot;$&#123;ingredient.id&#125;&quot;</span>/&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">th:text</span>=<span class="hljs-string">&quot;$&#123;ingredient.name&#125;&quot;</span>&gt;</span>INGREDIENT<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;ingredient-group&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;sauce&quot;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Pick your sauce:<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">th:each</span>=<span class="hljs-string">&quot;ingredient : $&#123;sauce&#125;&quot;</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ingredients&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">th:value</span>=<span class="hljs-string">&quot;$&#123;ingredient.id&#125;&quot;</span>/&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">th:text</span>=<span class="hljs-string">&quot;$&#123;ingredient.name&#125;&quot;</span>&gt;</span>INGREDIENT<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>            <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>Name your taco creation:<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>                <span class="hljs-comment">&lt;!--th:field 用来绑定后台对象和表单数据--&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">th:field</span>=<span class="hljs-string">&quot;*&#123;name&#125;&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br><br>                <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Submit your taco<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>我们为各种类型的配料重复定义**&lt;div&gt;**片段，并且还添加了一个 Submit 按钮，以及用户用来定义其作品名称的输入域。</p>
+</blockquote>
+<div class="note warning"><p>由于还没有为接受创建 taco 的请求做准备。如果提交设计表单，用户就会遇到一个错误 <strong>HTTP 405（Request Method ”POST“ Not Supported）</strong></p>
+</div>
+
+<h2 id="处理表单提交"><a href="#处理表单提交" class="headerlink" title="处理表单提交"></a>处理表单提交</h2><p>&nbsp;&nbsp;由于视图中的表单设置成 <strong>POST</strong>,并没有声明 <strong>action</strong> 属性。这意味着当表单提交的时候，浏览器会收集表单中的所有数据，并以 <strong>HTTP POST</strong> 的方式将其发送至服务端，发送路径域渲染表单的 <strong>GET请求</strong> 路径相同，也就是 <strong>”/design“</strong></p>
+<p>因此，需要一个控制器处理方法，来处理针对 <strong>”/design“</strong> 的 <strong>POST请求</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">processDesign</span><span class="hljs-params">(Taco design)</span></span>&#123;<br>        &lt;!--输出日志--&gt;<br>        log.info(<span class="hljs-string">&quot;Processing design：&quot;</span> + design);<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;redirect:/orders/current&quot;</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note info"><p>当表单提交时，表单中的输入域就会绑定到 Taco 对象的属性上，该对象会以参数的形式传递给 以上的控制器处理方法。之后就可以在该控制器方法中对 Taco 对象进行任意操作。</p>
+</div>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Taco</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> List&lt;Ingredient&gt; ingredients;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于表单提交的数据包含多个 checkbox 元素，它们的名称都是 ingredients。还有一个 name 的文本输入元素。这些数据直接对应 Taco 类的 ingredients 和 name 属性。</p>
+</blockquote>
+<p>&nbsp;&nbsp;当前的控制器处理方法同样返回了一个 <strong>String</strong> 类型的值，这个值同样代表了一个要展现给用户的视图。</p>
+<p>&nbsp;&nbsp;但是，由于返回的值带有 <strong>”redirect：“</strong>前缀，表明这是一个重定向视图。表示在控制器处理方法完成之后，用户的浏览器会重定向到相对路径 <strong>/orders/current</strong>。</p>
+<blockquote>
+<p> 创建一个控制器，来处理 <strong>”/orders/current“</strong> 的请求</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos.web;<br><br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Controller;<br><span class="hljs-keyword">import</span> org.springframework.ui.Model;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;<br><span class="hljs-keyword">import</span> tacos.Order;<br><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Controller</span><br><span class="hljs-meta">@RequestMapping(&quot;/orders&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OrderController</span> </span>&#123;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/current&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">orderForm</span><span class="hljs-params">(Model model)</span></span>&#123;<br>      model.addAttribute(<span class="hljs-string">&quot;order&quot;</span>, <span class="hljs-keyword">new</span> Order());<br>      <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;orderForm&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note info"><p>Lombok @Slf4j： 该注解会在运行期创建一个 <strong>SLF4J Logger</strong> 对象。可以通过这个 <strong>Logger</strong> 记录所提交订单的详细信息。</p>
+</div>
+
+<blockquote>
+<p>创建 <strong>orderForm</strong> 视图</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs java">&lt;!DOCTYPE html&gt;<br>&lt;html xmlns=<span class="hljs-string">&quot;http://www.w3.org/1999/xhtml&quot;</span><br>      xmlns:th=<span class="hljs-string">&quot;http://www.thymeleaf.org&quot;</span>&gt;<br>    &lt;head&gt;<br>        &lt;meta charset=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;<br>        &lt;title&gt;Taco Cloud&lt;/title&gt;<br>        &lt;link rel=<span class="hljs-string">&quot;stylesheet&quot;</span> th:href=<span class="hljs-string">&quot;@&#123;/styles/styles.css&#125;&quot;</span>&gt;<br>    &lt;/head&gt;<br>    &lt;body&gt;<br><br>        &lt;form method=<span class="hljs-string">&quot;post&quot;</span> th:action=<span class="hljs-string">&quot;@&#123;/orders&#125;&quot;</span> th:object=<span class="hljs-string">&quot;$&#123;order&#125;&quot;</span>&gt;<br>            &lt;h1&gt;Order your taco creations!!!&lt;/h1&gt;<br><br>            &lt;img th:src=<span class="hljs-string">&quot;@&#123;/images/preview07.jpg&#125;&quot;</span> /&gt;<br>            &lt;a th:href=&quot;@&#123;/design&#125;&quot; id=&quot;another&quot;&gt;Design another taco&lt;/a&gt;<br><br>            &lt;div th:<span class="hljs-keyword">if</span>=<span class="hljs-string">&quot;$&#123;#fields.hasErrors()&#125;&quot;</span>&gt;<br>                &lt;span <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">&quot;validationError&quot;</span>&gt;<br>                    Please correct the problems below and resubmit...<br>                &lt;/span&gt;<br>            &lt;/div&gt;<br><br>            &lt;h3&gt;Deliver my taco masterpieces to...&lt;/h3&gt;<br>            &lt;label for=&quot;name&quot;&gt;Name: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;name&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;name&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;label for=&quot;street&quot;&gt;Street address: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;street&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;street&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;label for=&quot;city&quot;&gt;City: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;city&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;city&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;label for=&quot;state&quot;&gt;State: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;state&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;state&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;label for=&quot;zip&quot;&gt;Zip code: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;zip&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;zip&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;h3&gt;Here&#x27;s how I&#x27;ll pay...&lt;/h3&gt;<br>            &lt;label for=&quot;ccNumber&quot;&gt;Credit Card #: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;ccNumber&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;ccNumber&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;label for=&quot;ccExpiration&quot;&gt;Expiration: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;ccExpiration&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;ccExpiration&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;label for=&quot;ccVV&quot;&gt;CVV: &lt;/label&gt;<br>            &lt;input type=<span class="hljs-string">&quot;text&quot;</span> id=<span class="hljs-string">&quot;ccVV&quot;</span> th:field=<span class="hljs-string">&quot;*&#123;ccVV&#125;&quot;</span> /&gt;<br>            &lt;br/&gt;<br><br>            &lt;input type=<span class="hljs-string">&quot;submit&quot;</span> value=<span class="hljs-string">&quot;Submit order&quot;</span> /&gt;<br>        &lt;/form&gt;<br>    &lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+
+<div class="note info"><p>上述视图指定了一个表单的 <strong>action</strong>。如果不指定，那麽表单就会以 <strong>HTTP POST</strong> 的形式提交到与展现该表单相同的 <strong>URL</strong>上。这里明确指定表单要提交到 <strong>”/orders“</strong>上</p>
+</div>
+
+<blockquote>
+<p>添加一个以便于处理针对 <strong>“/orders”</strong> 的 POST请求的控制器处理方法</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">processOrder</span><span class="hljs-params">(Order order)</span></span>&#123;<br>        log.info(<span class="hljs-string">&quot;Order submitted:  &quot;</span> + order);<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;redirect:/&quot;</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>taco 订单提交的领域对象</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Order</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> String street;<br>    <span class="hljs-keyword">private</span> String city;<br>    <span class="hljs-keyword">private</span> String state;<br>    <span class="hljs-keyword">private</span> String zip;<br>    <span class="hljs-keyword">private</span> String ccNumber;<br>    <span class="hljs-keyword">private</span> String ccExpiration;<br>    <span class="hljs-keyword">private</span> String ccVV;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note success"><p>浏览器订单提交之后，在命令窗中关注应用的日志来查看订单信息。</p>
+<blockquote>
+<p> Order submitted:  Order(name=mofang, street=dodos, city=dsa, state=, zip=1213, ccNumber=434221, ccExpiration=, ccVV=121)</p>
+</blockquote>
+</div>
+
+<p>可以发现，尽管我们的控制器完成了它的工作并处理了表单提交，但是也让一些错误的信息混了进来。表单中的大部分输入域包含的可能都是不正确的信息。因此需要进行<strong>表单校验</strong>。</p>
+<h2 id="校验表单输入"><a href="#校验表单输入" class="headerlink" title="校验表单输入"></a>校验表单输入</h2><p>&nbsp;&nbsp;如果我们没有指明表单的输入域该如何进行校验，就没有什么能够阻止用户在创建 taco 的时候不选择任何配料，或则输入空的快递地址。</p>
+<blockquote>
+<p>常用表单校验方法</p>
+</blockquote>
+<ul>
+<li><strong>在控制器方法中校验：</strong>在方法中使用大量的 <strong>if/then</strong> 代码块，逐个检查，确保每个输入域都满足对应的校验规则。这样会非常繁琐，并且难以阅读和检查。</li>
+<li><strong>使用 Spring 支持的 Java 的 Bean 校验 API：</strong> <strong>Bean Validation API</strong>，也被称为 <strong>JSR-303</strong>。我们额能够更容易地校验规则，而不必在应用程序中显示的编写声明逻辑。借助 Spring Boot，要在项目中添加校验库，我们甚至不需要做任何特殊的操作，因为 <strong>Validation API</strong> 以及 <strong>Validation API 的 Hibernate</strong> 实现将会作为 <strong>Spring Boot Web starter 的传递性依赖自动添加到项目中</strong>。</li>
+</ul>
+<blockquote>
+<p>在 Spring MVC 中应用校验，需要</p>
+</blockquote>
+<ul>
+<li>在要被校验的类上声明校验规则。也就是 Taco 类</li>
+<li>在控制器方法中声明要进行校验。也就是 DesignTacoController 的 processDesign() 方法和 OrderController  rocessOrder() 方法</li>
+<li>修改表单视图以展现校验错误</li>
+</ul>
+<h3 id="声明校验规则"><a href="#声明校验规则" class="headerlink" title="声明校验规则"></a>声明校验规则</h3><blockquote>
+<p>需求一：对于Taco 来说，我们期望确保 name 属性不为空或null，同时期望选中的配料至少要包含一项。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-keyword">import</span> javax.validation.constraints.NotNull;<br><span class="hljs-keyword">import</span> javax.validation.constraints.Size;<br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Taco</span> </span>&#123;<br><br>    <span class="hljs-meta">@NotNull</span><br>    <span class="hljs-meta">@Size(min = 5, message = &quot;Name must be at lease 5 characters long&quot;)</span><br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-meta">@Size(min = 1, message = &quot;You must choose at lease 1 ingredient&quot;)</span><br>    <span class="hljs-keyword">private</span> List&lt;String&gt; ingredients;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note info"><ul>
+<li><p><strong>@NotNull：</strong>该注解指明当前属性不能为null</p>
+</li>
+<li><p><strong>@Size：</strong>该注解指明当前属性至少有多少字符，<strong>message属性</strong>定义了当输入的信息不满足声明的校验规则时要给用户展示的消息。</p>
+</li>
+</ul>
+</div>
+
+<blockquote>
+<p>需求二：对于Order来说，对于地址相关的属性，只要确保用户没有提交空白字段即可，使用 <strong>Hibernate                 validation</strong> 的 <strong>@NotBlank</strong> 注解。支付相关的字段，不仅要确保 ccNumber 的属性不为空，还要                保证它所包含的值是一个合法的信用卡号码。ccException 属性必须符合 <strong>MM/YY</strong> 格式。ccCVV 属                性需要一个3位的数字。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-keyword">import</span> org.hibernate.validator.constraints.CreditCardNumber;<br><br><span class="hljs-keyword">import</span> javax.validation.constraints.Digits;<br><span class="hljs-keyword">import</span> javax.validation.constraints.NotBlank;<br><span class="hljs-keyword">import</span> javax.validation.constraints.Pattern;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Order</span> </span>&#123;<br><br>    <span class="hljs-meta">@NotBlank(message=&quot;Name is required&quot;)</span><br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-meta">@NotBlank(message=&quot;Street is required&quot;)</span><br>    <span class="hljs-keyword">private</span> String street;<br><br>    <span class="hljs-meta">@NotBlank(message=&quot;City is required&quot;)</span><br>    <span class="hljs-keyword">private</span> String city;<br><br>    <span class="hljs-meta">@NotBlank(message=&quot;State is required&quot;)</span><br>    <span class="hljs-keyword">private</span> String state;<br><br>    <span class="hljs-meta">@NotBlank(message=&quot;Zip Code is required&quot;)</span><br>    <span class="hljs-keyword">private</span> String zip;<br><br>    <span class="hljs-meta">@CreditCardNumber(message = &quot;Not a vaild credit card number&quot;)</span><br>    <span class="hljs-keyword">private</span> String ccNumber;<br><br>    <span class="hljs-meta">@Pattern(regexp=&quot;^(0[1-9] | 1[0-2])([\\/])([1-9][0-9])$&quot;, message = &quot;Must be formatted MM/YY&quot;)</span><br>    <span class="hljs-keyword">private</span> String ccExpiration;<br><br>    <span class="hljs-meta">@Digits(integer = 3, fraction = 0, message =&quot;Invalid CVV&quot;)</span><br>    <span class="hljs-keyword">private</span> String ccVV;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note info"><ul>
+<li><strong>@CreditCardNumber：</strong>这个注解声明属性的值必须是合法的信用卡号，它要能通过 <strong>Luhn</strong> 算法的检查。这能防止用户有意或无意的输入错误的数据，但是该检查并不能确保这个信用卡号真的分配给了某个账户，也不能保证这个账号能够用来进行支付。</li>
+<li><strong>@Pattern：</strong>在这个注解中，我们为其提供了一个正则表达式，确保属性值符合预期的格式。</li>
+<li><strong>@Digits：</strong>这个注解能够确保它的值包含3位有效数字。</li>
+</ul>
+</div>
+
+<h3 id="在表单绑定时执行校验"><a href="#在表单绑定时执行校验" class="headerlink" title="在表单绑定时执行校验"></a>在表单绑定时执行校验</h3><p>&nbsp;&nbsp;要想在提交至对应的控制器方法时执行对应的校验，需要为对应的控制器处理方法的<strong>对应参数（Taco/Order）</strong>上添加一个 <strong>Java Bean Validation API</strong> 的 <strong>@Valid</strong> 注解。</p>
+<blockquote>
+<p>执行 Taco 校验</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plain">@PostMapping<br>    public String processDesign(@Valid Taco design, Errors errors)&#123;<br>        <br>        if(errors.hasErrors())&#123;<br>            return &quot;design&quot;;<br>        &#125;<br>        <br>        log.info(&quot;Processing design：&quot; + design);<br>        System.out.println(design);<br>        return &quot;redirect:&#x2F;orders&#x2F;current&quot;;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note info"><p><strong>@Valid</strong> 注解会告诉 <strong>Spring MVC</strong> 要对提交的 Taco 对象进行校验，校验时机是**<em>在它绑定完表单数据之后，调用控制器处理方法之前**</em>。</p>
+<p><strong>Error对象：</strong>用来捕获校验错误的细节，然后传递给当前的控制器处理方法，进行错误处理。</p>
+</div>
+
+<blockquote>
+<p>执行 Order 校验</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">processOrder</span><span class="hljs-params">(<span class="hljs-meta">@Valid</span> Order order, Errors errors)</span></span>&#123;<br><br>    <span class="hljs-keyword">if</span>(errors.hasErrors())&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;orderForm&quot;</span>;<br>    &#125;<br><br>    log.info(<span class="hljs-string">&quot;Order submitted:  &quot;</span> + order);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;redirect:/&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<div class="note warning"><p>如果这两个模块都没有错误，那么控制器处理方法就会允许处理提交的数据。如果存在错误，请求就会被转发到表单视图上，以便用户有机会纠正他们的错误。</p>
+</div>
+
+<h3 id="展示校验错误"><a href="#展示校验错误" class="headerlink" title="展示校验错误"></a>展示校验错误</h3><p>&nbsp;&nbsp;<strong>Thymeleaf</strong> 模板提供了便捷的的访问 <strong>Errors</strong> 对象的方法，借助 <strong>fields 及其 th:errors 属性</strong>。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;street&quot;</span>&gt;</span>Street address: <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;street&quot;</span> <span class="hljs-attr">th:field</span>=<span class="hljs-string">&quot;*&#123;street&#125;&quot;</span> /&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;validationError&quot;</span> <span class="hljs-attr">th:if</span>=<span class="hljs-string">&quot;$&#123;#fields.hasErrors(&#x27;street&#x27;)&#125;&quot;</span> <span class="hljs-attr">th:errors</span>=<span class="hljs-string">&quot;*&#123;street&#125;&quot;</span>&gt;</span>Street Error<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">br</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<div class="note info"><p><strong>span</strong> 标签中使用了 class 属性来为错误信息添加样式。</p>
+<p><strong>th:if 属性</strong>决定是否显示该元素。</p>
+<p><strong>fields 属性</strong>的 hasErrors() 方法会检查 ccNumber 域是否存在错误。如果存在，就会渲染 span 标签。</p>
+<p><strong>th:errors 属性</strong>引用了 ccNumber 的输入域，如果该输入域存在错误，那么它将会 span 元素的占位符内容替换成校验信息。</p>
+</div>
+
+<h2 id="使用视图控制器"><a href="#使用视图控制器" class="headerlink" title="使用视图控制器"></a>使用视图控制器</h2><blockquote>
+<p>如果一个控制器非常简单，不需要填充模型或处理输入时，可以通过声明<strong>视图控制器</strong>定义控制器。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos.web;<br><br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.config.annotation.ViewControllerRegistry;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WebConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addViewControllers</span><span class="hljs-params">(ViewControllerRegistry registry)</span> </span>&#123;<br>        registry.addViewController(<span class="hljs-string">&quot;/&quot;</span>).setViewName(<span class="hljs-string">&quot;home&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>&nbsp;&nbsp;<strong>WebConfig</strong> 类 实现了 <strong>WebMvcConfigurer</strong> 接口。该接口中定义了多个方法来配置 <strong>Spring MVC</strong>。由于它提供的方法都是默认的，所以只需要覆盖所需要的方法即可。</p>
+<p>&nbsp;&nbsp;<strong>addViewControllers()</strong> 方法会接收一个 <strong>ViewControllerRegistry</strong> 对象。我们可以使用该方法注册一个或多个视图控制器。上例中，调用 <strong>registry</strong> 的 <strong>addViewController()</strong> 方法，将 <strong>“/”</strong> 传递了进去，视图控制器会对该路径执行 GET 请求，然后返回 <strong>ViewControllerRegistration</strong> 对象。调用该对象的 <strong>setViewName()</strong> 方法，指明请求 <strong>“/”</strong> 的时候要转发到 <strong>“home”</strong> 视图上。</p>
+<div class="note warning"><p>在配置类中只需几行代码就替换了 <strong>HomeController</strong> 控制器类。要从 @WebMvcTest 注解中移除对 <strong>HomeController</strong> 的引用，否则编译时会报错</p>
+</div>
+
+<div class="note info"><p>如果存在多个相同的视图控制器声明，我们可以把该声明添加到 <strong>引导类中</strong></p>
+</div>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tacos;<br><br><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;<br><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.config.annotation.ViewControllerRegistry;<br><span class="hljs-keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurer;<br><br><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TacoCloudApplication</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">WebMvcConfigurer</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SpringApplication.run(TacoCloudApplication.class, args);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addViewControllers</span><span class="hljs-params">(ViewControllerRegistry registry)</span> </span>&#123;<br>        registry.addViewController(<span class="hljs-string">&quot;/&quot;</span>).setViewName(<span class="hljs-string">&quot;home&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="选择视图模板库"><a href="#选择视图模板库" class="headerlink" title="选择视图模板库"></a>选择视图模板库</h2><blockquote>
+<p>Spring Boot 自动配置功能所支持的模板方案</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">模板</th>
+<th align="center">Spring Boot starter 依赖</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">FreeMarker</td>
+<td align="center">spring-boot-starter-freemarker</td>
+</tr>
+<tr>
+<td align="center">Groovy Templates</td>
+<td align="center">spring-boot-starter-groovy-templates</td>
+</tr>
+<tr>
+<td align="center">Java Server Pages</td>
+<td align="center">无（由 Tomcat 或 Jetty 提供）</td>
+</tr>
+<tr>
+<td align="center">Mustache</td>
+<td align="center">spring-boot-starter-mustache</td>
+</tr>
+<tr>
+<td align="center">Thymeleaf</td>
+<td align="center">spring-boot-starter-thymeleaf</td>
+</tr>
+</tbody></table>
+<div class="note info"><p>只需要选择想要使用的视图模板库，将其作为依赖项添加到构建文件中，就可以在 /templates 目录下编写模板了。</p>
+<p>Spring Boot 会探测到你所选择的模板库，并自动配置为 Spring MVC 控制器生成视图所需要的各种组件。</p>
+</div>
+
+<div class="note warning"><p>如果使用 <strong>JSP模板</strong>。由于 <strong>Java Servlet</strong> 容器包括嵌入式的 <strong>Tomcat 和 Jetty 容器</strong>，通常会在 <strong>“/WEB-INF”</strong> 目录下寻找 <strong>JSP</strong>。这样的话，就只能将应用构建为 <strong>WAR</strong> 文件并部署到传统的 <strong>Servlet容器中</strong>。</p>
+</div>
+
+<h3 id="模板缓存"><a href="#模板缓存" class="headerlink" title="模板缓存"></a>模板缓存</h3><p>开发期，一般都需要禁用模板缓存。只需要将相关的缓存属性设置为 <strong>false</strong></p>
+<blockquote>
+<p>每种模板库所对应的缓存属性</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">模板</th>
+<th align="center">启用缓存的属性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">FreeMarker</td>
+<td align="center">spring.freemarker.cache</td>
+</tr>
+<tr>
+<td align="center">Groovy Templates</td>
+<td align="center">spring.groovy.template.cache</td>
+</tr>
+<tr>
+<td align="center">Mustache</td>
+<td align="center">spring.mustache.cache</td>
+</tr>
+<tr>
+<td align="center">Thymeleaf</td>
+<td align="center">spring.thymeleaf.cache</td>
+</tr>
+</tbody></table>
+<div class="note info"><p>默认情况下，这些属性都设置成了 <strong><em>true</em></strong>，以便于启用缓存。要禁用缓存，只需要在 <strong>application.properties</strong> 中添加相关代码即可。</p>
+</div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml-dtd">spring.thymeleaf.cache &#x3D; false<br></code></pre></td></tr></table></figure>
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:outcome1998@gmail.com">mofang-sudo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/09/24/Spring%20%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0(%E4%BA%8C)/">http://example.com/2020/09/24/Spring%20%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0(%E4%BA%8C)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">墨坊のBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Spring/">Spring</a><a class="post-meta__tags" href="/tags/Spring-MVC/">Spring MVC</a></div><div class="post_share"><div class="social-share" data-image="/images/post/preview09.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/10/Spring-%E6%95%B4%E5%90%88-Mybatis-%E8%AF%A6%E8%AE%B0/"><img class="prev-cover" src="/images/post/preview10.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spring 整合 Mybatis 详记</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/24/%E5%A4%84%E7%90%86Windows%E4%B8%8B%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/"><img class="next-cover" src="/images/post/preview08.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">处理Windows下的端口占用问题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/10/13/SSM-整合详记/" title="SSM 整合详记"><img class="cover" src="/images/post/preview11.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-13</div><div class="title">SSM 整合详记</div></div></a></div><div><a href="/2020/10/14/Spring-4-特性-WebClient/" title="Spring 5 特性-WebClient"><img class="cover" src="/images/post/preview14.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-14</div><div class="title">Spring 5 特性-WebClient</div></div></a></div><div><a href="/2020/10/14/Spring-4-特性-核心容器改进-Web开发的增强/" title="Spring 4 特性-核心容器改进&Web开发的增强"><img class="cover" src="/images/post/preview13.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-14</div><div class="title">Spring 4 特性-核心容器改进&Web开发的增强</div></div></a></div><div><a href="/2020/10/14/Spring-4-特性-泛型限定式依赖注入/" title="Spring 4 特性-泛型限定式依赖注入"><img class="cover" src="/images/post/preview12.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-14</div><div class="title">Spring 4 特性-泛型限定式依赖注入</div></div></a></div><div><a href="/2020/10/16/Spring-5-特性-整合日志框架/" title="Spring 5 特性-整合日志框架"><img class="cover" src="/images/post/preview16.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-16</div><div class="title">Spring 5 特性-整合日志框架</div></div></a></div><div><a href="/2020/10/10/Spring-整合-Mybatis-详记/" title="Spring 整合 Mybatis 详记"><img class="cover" src="/images/post/preview10.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-10</div><div class="title">Spring 整合 Mybatis 详记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81MTU3Ni8yODA1Nw=="></div></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By mofang-sudo</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a target="_blank" rel="noopener" href="https://mofang-sudo.github.io/">blog</a>!</div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    $.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js', function () {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon_piao" mobile="true" src="/js/third-party/piao.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  'meta[name=description]',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (true) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', '', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>
