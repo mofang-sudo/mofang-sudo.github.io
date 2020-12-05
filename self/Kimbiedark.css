@@ -4,6 +4,7 @@
     License:  Creative Commons Attribution-ShareAlike 4.0 Unported License
     URL:      https://github.com/idleberg/Kimbie-highlight.js
 */
+
 /* 新添加的內容 */
 /* ------------------------------------- */
 /* 代碼框背景色和字體顔色,與hljs一樣就行 */
@@ -39,59 +40,68 @@
 +  background: #d3af86 !important
 +}
 
+/* ------------------------------------- */
 
-.hljs {
-  color: #a9b7c6;
-  background: #282b2e;
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-}
-
-.hljs-number,
-.hljs-literal,
-.hljs-symbol,
-.hljs-bullet {
-  color: #6897BB;
-}
-
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-deletion {
-  color: #cc7832;
-}
-
-.hljs-variable,
-.hljs-template-variable,
-.hljs-link {
-  color: #629755;
-}
-
+/* Kimbie Comment */
 .hljs-comment,
 .hljs-quote {
-  color: #808080;
+  color: #d6baad;
 }
 
-.hljs-meta {
-  color: #bbb529;
-}
-
-.hljs-string,
-.hljs-attribute,
-.hljs-addition {
-  color: #6A8759;
-}
-
-.hljs-section,
-.hljs-title,
-.hljs-type {
-  color: #ffc66d;
-}
-
+/* Kimbie Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
 .hljs-name,
 .hljs-selector-id,
-.hljs-selector-class {
-  color: #e8bf6a;
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-meta {
+  color: #dc3958;
+}
+
+/* Kimbie Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-deletion,
+.hljs-link {
+  color: #f79a32;
+}
+
+/* Kimbie Yellow */
+.hljs-title,
+.hljs-section,
+.hljs-attribute {
+  color: #f06431;
+}
+
+/* Kimbie Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+  color: #889b4a;
+}
+
+/* Kimbie Purple */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-function {
+  color: #98676a;
+}
+
+/* 更改的內容 把.hljs改為 #article-container figure.highlight .hljs *、
+/* ------------------------------------- */
+#article-container figure.highlight .hljs {
+  display: block;
+  overflow-x: auto;
+  background: #221a0f;
+  color: #d3af86;
+  padding: 0.5em;
 }
 
 .hljs-emphasis {
@@ -101,3 +111,4 @@
 .hljs-strong {
   font-weight: bold;
 }
+
