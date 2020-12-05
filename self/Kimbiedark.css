@@ -40,68 +40,58 @@
 +}
 
 
-作者: Jerry
-連結: https://demo.jerryc.me/posts/b37b5fe3/#%E4%B8%8B%E8%BC%89%E5%92%8C%E4%BF%AE%E6%94%B9CSS%E6%96%87%E4%BB%B6
-來源: Butterfly
-著作權歸作者所有。商業轉載請聯絡作者獲得授權，非商業轉載請註明出處。
-/* Kimbie Comment */
-.hljs-comment,
-.hljs-quote {
-  color: #d6baad;
-}
-
-/* Kimbie Red */
-.hljs-variable,
-.hljs-template-variable,
-.hljs-tag,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-regexp,
-.hljs-meta {
-  color: #dc3958;
-}
-
-/* Kimbie Orange */
-.hljs-number,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-literal,
-.hljs-type,
-.hljs-params,
-.hljs-deletion,
-.hljs-link {
-  color: #f79a32;
-}
-
-/* Kimbie Yellow */
-.hljs-title,
-.hljs-section,
-.hljs-attribute {
-  color: #f06431;
-}
-
-/* Kimbie Green */
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-addition {
-  color: #889b4a;
-}
-
-/* Kimbie Purple */
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-function {
-  color: #98676a;
-}
-
 .hljs {
+  color: #a9b7c6;
+  background: #282b2e;
   display: block;
   overflow-x: auto;
-  background: #221a0f;
-  color: #d3af86;
   padding: 0.5em;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-symbol,
+.hljs-bullet {
+  color: #6897BB;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-deletion {
+  color: #cc7832;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link {
+  color: #629755;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #808080;
+}
+
+.hljs-meta {
+  color: #bbb529;
+}
+
+.hljs-string,
+.hljs-attribute,
+.hljs-addition {
+  color: #6A8759;
+}
+
+.hljs-section,
+.hljs-title,
+.hljs-type {
+  color: #ffc66d;
+}
+
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #e8bf6a;
 }
 
 .hljs-emphasis {
