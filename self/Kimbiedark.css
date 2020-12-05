@@ -9,17 +9,17 @@
 /* ------------------------------------- */
 /* 代碼框背景色和字體顔色,與hljs一樣就行 */
 /* 必須配置(把下面.hljs的color和background複製到這裏來) */
-+#article-container pre, 
-+#article-container figure.highlight {
-+  background: #221a0f;  
-+  color: #d3af86
-+}
+#article-container pre, 
+#article-container figure.highlight {
+  background: #221a0f;  
+  color: #d3af86
+}
 
 /* 代碼框工具欄 (如果你關掉了copy、lang和shrink,可不用配置這個 */
-+#article-container figure.highlight .highlight-tools {
-+  color: #fff;
-+  background: #321a0f
-+}
+#article-container figure.highlight .highlight-tools {
+  color: #fff;
+  background: #321a0f
+}
 
 /* 代碼框行數(如果已經關掉line_number,可以不用配置這個) */
 +#article-container figure.highlight .gutter pre {
